@@ -43,11 +43,7 @@ kotlin {
     }
 
     nativeTarget.apply {
-        binaries {
-            executable {
-                entryPoint = "main"
-            }
-        }
+        
     }
     sourceSets {
         val commonMain by getting {
