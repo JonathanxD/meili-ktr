@@ -7,7 +7,6 @@ plugins {
     kotlin("plugin.serialization") version "1.5.31"
     id("com.github.hierynomus.license") version "0.16.1"
     id("maven-publish")
-    application
 }
 
 group = "com.koresframework"
