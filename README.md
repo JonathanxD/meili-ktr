@@ -3,7 +3,7 @@
 ![MIT License](https://img.shields.io/badge/License-MIT-green)
 [![Discord](https://img.shields.io/discord/291407467286364164.svg)](https://discord.gg/3cQWmtj)
 [![Pipeline](https://img.shields.io/gitlab/pipeline-status/Kores/meili-ktr)](https://gitlab.com/Kores/meili-ktr/-/pipelines)
-[![Packages](https://img.shields.io/gitlab/v/release/Kores/meili-ktr)](https://gitlab.com/Kores/meili-ktr/-/packages)
+[![Packages](https://img.shields.io/gitlab/v/tag/Kores/meili-ktr)](https://gitlab.com/Kores/meili-ktr/-/packages)
 
 
 Multiplatform Kotlin client for MeiliSearch API.
