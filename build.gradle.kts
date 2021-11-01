@@ -10,11 +10,14 @@ plugins {
 }
 
 group = "com.koresframework"
-version = "0.1.1"
+version = "0.1.2"
 
 repositories {
     mavenCentral()
 }
+
+val hostOs = System.getProperty("os.name")
+val isLinux = hostOs.equals("linux", ignoreCase = true)
 
 kotlin {
     jvm {
@@ -33,18 +36,13 @@ kotlin {
             }
         }
     }
-    /*val hostOs = System.getProperty("os.name")
-    val isMingwX64 = hostOs.startsWith("Windows")
-    val nativeTarget = when {
-        hostOs == "Mac OS X" -> macosX64("native")
-        hostOs == "Linux" -> linuxX64("native")
-        isMingwX64 -> mingwX64("native")
-        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
+    val macos = macosX64("macos64")
+    val linux = linuxX64("linux64")
+    val windows = mingwX64("mingw64")
+
+    configure(listOf(macos, linux, windows)) {
     }
 
-    nativeTarget.apply {
-        
-    }*/
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -81,12 +79,48 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
             }
         }
-        val nativeMain by getting {
+        val macos64Main by getting {
+
+        }
+        val linux64Main by getting {
+
+        }
+        val mingw64Main by getting {
+
+        }
+        val macos64Test by getting
+        val linux64Test by getting
+        val mingw64Test by getting
+
+        val nativeMain by sourceSets.creating {
+            dependsOn(commonMain)
+            macos64Main.dependsOn(this)
+            linux64Main.dependsOn(this)
+            mingw64Main.dependsOn(this)
+
             dependencies {
                 implementation("io.ktor:ktor-client-curl:$ktor_version")
             }
         }
-        val nativeTest by getting
+        val nativeTest by sourceSets.creating {
+            dependsOn(commonTest)
+            macos64Test.dependsOn(this)
+            linux64Test.dependsOn(this)
+            mingw64Test.dependsOn(this)
+        }
+    }
+    val publicationsFromMainHost =
+        listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
+
+    publishing {
+        publications {
+            matching { it.name in publicationsFromMainHost }.all {
+                val targetPublication = this@all
+                tasks.withType<AbstractPublishToMaven>()
+                    .matching { it.publication == targetPublication }
+                    .configureEach { onlyIf { isLinux } }
+            }
+        }
     }
 }
 
