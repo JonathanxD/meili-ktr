@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "com.koresframework"
-version = "0.1.0"
+version = "0.1.1"
 
 repositories {
     mavenCentral()
@@ -33,7 +33,7 @@ kotlin {
             }
         }
     }
-    val hostOs = System.getProperty("os.name")
+    /*val hostOs = System.getProperty("os.name")
     val isMingwX64 = hostOs.startsWith("Windows")
     val nativeTarget = when {
         hostOs == "Mac OS X" -> macosX64("native")
@@ -44,7 +44,7 @@ kotlin {
 
     nativeTarget.apply {
         
-    }
+    }*/
     sourceSets {
         val commonMain by getting {
             dependencies {
