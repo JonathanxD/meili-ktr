@@ -8,14 +8,17 @@
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-@file:UseSerializers(ZonedDateTimeSerializer::class)
-package com.koresframework.meiliktr.response
+package com.koresframework.meiliktr
 
-import com.koresframework.meiliktr.serializers.ZonedDateTimeSerializer
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.UseSerializers
+import com.koresframework.meiliktr.response.KeysResponse
+import io.ktor.client.request.*
 
-@Serializable
-data class UpdateDocumentResponse(
-    val updateId: Int
-)
+class Keys(val meiliClient: MeiliClient) {
+    suspend fun keys(): KeysResponse {
+        return this.meiliClient.httpClient.get {
+            url {
+                encodedPath = "/keys"
+            }
+        }
+    }
+}

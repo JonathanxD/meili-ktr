@@ -1,0 +1,10 @@
+types = ["mdbook"]
+
+[index]
+group = "com.koresframework.meili-ktr"
+
+[mdbook]
+path = "docs/"
+
+[mdbook.index]
+group = "com.koresframework.meili-ktr.book"

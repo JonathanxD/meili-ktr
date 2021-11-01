@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "com.koresframework"
-version = "0.1.2"
+version = "0.1.3"
 
 repositories {
     mavenCentral()
@@ -58,23 +58,20 @@ kotlin {
             }
         }
         val jvmMain by getting {
-            dependencies {
-                implementation("io.ktor:ktor-client-cio:$ktor_version")
-            }
+
         }
         val jvmTest by getting {
             dependencies {
+                implementation("io.ktor:ktor-client-cio:$ktor_version")
                 implementation("io.ktor:ktor-client-mock:$ktor_version")
                 implementation(kotlin("test-junit"))
             }
         }
         val jsMain by getting {
-            dependencies {
-                implementation("io.ktor:ktor-client-js:$ktor_version")
-            }
         }
         val jsTest by getting {
             dependencies {
+                implementation("io.ktor:ktor-client-js:$ktor_version")
                 implementation(kotlin("test-js"))
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
             }
@@ -97,16 +94,16 @@ kotlin {
             macos64Main.dependsOn(this)
             linux64Main.dependsOn(this)
             mingw64Main.dependsOn(this)
-
-            dependencies {
-                implementation("io.ktor:ktor-client-curl:$ktor_version")
-            }
         }
         val nativeTest by sourceSets.creating {
             dependsOn(commonTest)
             macos64Test.dependsOn(this)
             linux64Test.dependsOn(this)
             mingw64Test.dependsOn(this)
+
+            dependencies {
+                //implementation("io.ktor:ktor-client-curl:$ktor_version")
+            }
         }
     }
     val publicationsFromMainHost =

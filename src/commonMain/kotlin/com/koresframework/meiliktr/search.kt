@@ -8,15 +8,32 @@
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.koresframework.meiliktr.util
+package com.koresframework.meiliktr
 
-import com.koresframework.meiliktr.Updates
-import kotlinx.coroutines.delay
+import com.koresframework.meiliktr.request.SearchRequest
+import com.koresframework.meiliktr.response.SearchResponse
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
+import io.ktor.util.reflect.*
 
-suspend inline fun Updates.delayUntilProcessed(indexUid: String, updateId: Int, delayMillis: Long = 250) {
-    var status = this.updateStatus(indexUid, updateId)
-    while (status.status != "processed") {
-        delay(delayMillis)
-        status = this.updateStatus(indexUid, updateId)
+class Search(val meiliClient: MeiliClient) {
+    suspend fun <T> search(info: TypeInfo, indexUid: String, req: SearchRequest): SearchResponse<T> {
+        val response = this.meiliClient.httpClient.post<HttpResponse> {
+            url {
+                encodedPath = "/indexes/${indexUid.encodeURLPath()}/search"
+            }
+            body = req
+        }
+        return response.call.receive(info) as SearchResponse<T>
+    }
+
+    suspend inline fun <reified T> search(indexUid: String, req: SearchRequest): SearchResponse<T> {
+        return this.meiliClient.httpClient.post {
+            url {
+                encodedPath = "/indexes/${indexUid.encodeURLPath()}/search"
+            }
+            body = req
+        }
     }
 }

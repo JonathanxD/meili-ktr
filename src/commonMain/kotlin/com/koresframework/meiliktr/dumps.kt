@@ -8,15 +8,27 @@
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.koresframework.meiliktr.util
+package com.koresframework.meiliktr
 
-import com.koresframework.meiliktr.Updates
-import kotlinx.coroutines.delay
+import com.koresframework.meiliktr.response.DumpsResponse
+import com.koresframework.meiliktr.response.DumpsStatusResponse
+import io.ktor.client.request.*
+import io.ktor.http.*
 
-suspend inline fun Updates.delayUntilProcessed(indexUid: String, updateId: Int, delayMillis: Long = 250) {
-    var status = this.updateStatus(indexUid, updateId)
-    while (status.status != "processed") {
-        delay(delayMillis)
-        status = this.updateStatus(indexUid, updateId)
+class Dumps(val meiliClient: MeiliClient) {
+    suspend fun dumps(): DumpsResponse {
+        return this.meiliClient.httpClient.post {
+            url {
+                encodedPath = "/dumps"
+            }
+        }
+    }
+
+    suspend fun status(dumpUid: String): DumpsStatusResponse {
+        return this.meiliClient.httpClient.get {
+            url {
+                encodedPath = "/dumps/${dumpUid.encodeURLPath()}/status"
+            }
+        }
     }
 }

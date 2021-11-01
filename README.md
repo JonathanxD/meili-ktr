@@ -25,9 +25,9 @@ meili-ktr is designed for Kotlin language and is not Java friendly, for a Java l
 
 ```kotlin
 val client = MeiliClient(MeiliClientConfiguration("localhost", 7700))
-val createIndex = client.createIndex("articles")
-val indexes = client.indexes()
-val deleteIndex = client.deleteIndex("articles")
+val createIndex = client.indexes.createIndex("articles")
+val indexes = client.indexes.indexes()
+val deleteIndex = client.indexes.deleteIndex("articles")
 ```
 
 ### Add document
@@ -37,7 +37,7 @@ val deleteIndex = client.deleteIndex("articles")
 data class Doc(val docId: String, val text: String)
 
 val client = MeiliClient(MeiliClientConfiguration("localhost", 7700))
-val createIndex = client.createIndex("docs", "docId")
+val createIndex = client.indexes.createIndex("docs", "docId")
 val addDoc = client.documents.addDocuments("docs", listOf(Doc("1", "Oh my MeiliSearch")))
 ```
 

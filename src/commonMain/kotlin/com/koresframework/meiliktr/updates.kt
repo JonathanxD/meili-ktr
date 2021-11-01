@@ -8,15 +8,26 @@
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.koresframework.meiliktr.util
+package com.koresframework.meiliktr
 
-import com.koresframework.meiliktr.Updates
-import kotlinx.coroutines.delay
+import com.koresframework.meiliktr.response.UpdateStatusResponse
+import io.ktor.client.request.*
+import io.ktor.http.*
 
-suspend inline fun Updates.delayUntilProcessed(indexUid: String, updateId: Int, delayMillis: Long = 250) {
-    var status = this.updateStatus(indexUid, updateId)
-    while (status.status != "processed") {
-        delay(delayMillis)
-        status = this.updateStatus(indexUid, updateId)
+class Updates(val meiliClient: MeiliClient) {
+    suspend fun updateStatus(indexUid: String, updateId: Int): UpdateStatusResponse {
+        return this.meiliClient.httpClient.get {
+            url {
+                encodedPath = "/indexes/${indexUid.encodeURLPath()}/updates/$updateId"
+            }
+        }
+    }
+
+    suspend fun allUpdatesStatus(indexUid: String): List<UpdateStatusResponse> {
+        return this.meiliClient.httpClient.get {
+            url {
+                encodedPath = "/indexes/${indexUid.encodeURLPath()}/updates"
+            }
+        }
     }
 }

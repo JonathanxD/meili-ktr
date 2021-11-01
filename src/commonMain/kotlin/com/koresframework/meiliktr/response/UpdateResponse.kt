@@ -12,22 +12,10 @@
 package com.koresframework.meiliktr.response
 
 import com.koresframework.meiliktr.serializers.ZonedDateTimeSerializer
-import com.koresframework.meiliktr.time.ZonedDateTime
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
 
 @Serializable
 data class UpdateResponse(
-    val updateId: Int,
-    val status: String,
-    val type: UpdateType,
-    val duration: Double? = null,
-    val enqueuedAt: ZonedDateTime,
-    val processedAt: ZonedDateTime? = null,
-)
-
-@Serializable
-data class UpdateType(
-    val name: String,
-    val number: Int? = null
+    val updateId: Int
 )

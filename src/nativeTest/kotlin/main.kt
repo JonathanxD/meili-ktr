@@ -29,12 +29,12 @@ class GenericTest {
     @Ignore
     fun `test create delete insert and delete doc`() = runBlocking {
         val client = MeiliClient(MeiliClientConfig("localhost", 7700))
-        client.indexes().filter {
+        client.indexes.indexes().filter {
             it.uid == "docs"
         }.forEach {
-            client.deleteIndex(it.uid)
+            client.indexes.deleteIndex(it.uid)
         }
-        val create = client.createIndex("docs", "docId")
+        val create = client.indexes.createIndex("docs", "docId")
         assertEquals("docs", create.uid)
         val insert = client.documents.addDocuments("docs", listOf(Doc("10", "Hello my dear world")))
         val insert2 = client.documents.addDocuments("docs", listOf(Doc("101", " my dear world")))
