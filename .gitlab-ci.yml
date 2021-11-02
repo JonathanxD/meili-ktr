@@ -18,6 +18,12 @@ variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
   CACHE_FALLBACK_KEY: "master"
 
+.shared_windows_runners:
+  tags:
+    - shared-windows
+    - windows
+    - windows-1809
+
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
@@ -44,6 +50,23 @@ deploy:
     - apt install -y build-essential libncurses5 libcurl4-openssl-dev
     - chmod +x ./gradlew
     - './gradlew publishAllPublicationsToGitLabRepository'
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+  only:
+    - tags
+
+deploy_windows:
+  extends:
+    - .shared_windows_runners
+  stage: deploy
+  script:
+    - choco install -y openjdk --version 17.0.1 --params "/q /norestart"
+    - refreshenv
+    - '.\gradlew.bat publishAllPublicationsToGitLabRepository'
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull

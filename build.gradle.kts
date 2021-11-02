@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "com.koresframework"
-version = "0.1.3"
+version = "0.1.4"
 
 repositories {
     mavenCentral()
@@ -86,7 +86,13 @@ kotlin {
 
         }
         val macos64Test by getting
-        val linux64Test by getting
+        val linux64Test by getting {
+            if (isLinux) {
+                dependencies {
+                    implementation("io.ktor:ktor-client-curl:$ktor_version")
+                }
+            }
+        }
         val mingw64Test by getting
 
         val nativeMain by sourceSets.creating {
@@ -100,16 +106,36 @@ kotlin {
             macos64Test.dependsOn(this)
             linux64Test.dependsOn(this)
             mingw64Test.dependsOn(this)
-
-            dependencies {
-                //implementation("io.ktor:ktor-client-curl:$ktor_version")
-            }
         }
     }
     val publicationsFromMainHost =
-        listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
+        listOf(jvm(), js(), linux).map { it.name } + "kotlinMultiplatform"
 
     publishing {
+        repositories {
+            maven {
+                // change to point to your repo, e.g. http://my.org/repo
+                url = uri("$buildDir/repo")
+            }
+            maven {
+                name = "GitLab"
+                url = uri("https://gitlab.com/api/v4/projects/30890788/packages/maven")
+                credentials(HttpHeaderCredentials::class) {
+                    val ciToken = System.getenv("CI_JOB_TOKEN")
+                    if (ciToken != null && ciToken.isNotEmpty()) {
+                        name = "Job-Token"
+                        value = System.getenv("CI_JOB_TOKEN")
+                    } else {
+                        name = "Private-Token"
+                        value = project.findProperty("GITLAB_TOKEN")?.toString() ?: System.getenv("GITLAB_TOKEN")
+                    }
+                }
+                authentication {
+                    val header by registering(HttpHeaderAuthentication::class)
+                }
+            }
+        }
+
         publications {
             matching { it.name in publicationsFromMainHost }.all {
                 val targetPublication = this@all
@@ -127,31 +153,5 @@ tasks {
         strictCheck = true
 
         this.setSource(fileTree("src").include("**/*.kt"))
-    }
-}
-
-publishing {
-    repositories {
-        maven {
-            // change to point to your repo, e.g. http://my.org/repo
-            url = uri("$buildDir/repo")
-        }
-        maven {
-            name = "GitLab"
-            url = uri("https://gitlab.com/api/v4/projects/30890788/packages/maven")
-            credentials(HttpHeaderCredentials::class) {
-                val ciToken = System.getenv("CI_JOB_TOKEN")
-                if (ciToken != null && ciToken.isNotEmpty()) {
-                    name = "Job-Token"
-                    value = System.getenv("CI_JOB_TOKEN")
-                } else {
-                    name = "Private-Token"
-                    value = project.findProperty("GITLAB_TOKEN")?.toString() ?: System.getenv("GITLAB_TOKEN")
-                }
-            }
-            authentication {
-                val header by registering(HttpHeaderAuthentication::class)
-            }
-        }
     }
 }
