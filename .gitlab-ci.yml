@@ -24,13 +24,11 @@ variables:
     - windows
     - windows-1809
 
-before_script:
-  - export GRADLE_USER_HOME=`pwd`/.gradle
-
 build:
   stage: build
   image: azul/zulu-openjdk:17.0.1
   script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
     - apt update
     - apt install -y build-essential libncurses5 libcurl4-openssl-dev
     - chmod +x ./gradlew
@@ -46,6 +44,7 @@ deploy:
   stage: deploy
   image: azul/zulu-openjdk:17.0.1
   script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
     - apt update
     - apt install -y build-essential libncurses5 libcurl4-openssl-dev
     - chmod +x ./gradlew
@@ -64,6 +63,7 @@ deploy_windows:
     - .shared_windows_runners
   stage: deploy
   script:
+    - $env:GRADLE_USER_HOME="$(Get-Item .)\.gradle"
     - choco install -y openjdk --version 17.0.1 --params "/q /norestart"
     - refreshenv
     - '.\gradlew.bat publishAllPublicationsToGitLabRepository'
