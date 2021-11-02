@@ -81,21 +81,21 @@ deploy_windows:
   only:
     - tags
 
-deploy_macos:
-  when: never
-  extends:
-    - .macos_buildcloud_runners
-  stage: deploy
-  script:
-    - export GRADLE_USER_HOME=`pwd`/.gradle
-    - brew install openjdk@17
-    - chmod +x ./gradlew
-    - './gradlew publishAllPublicationsToGitLabRepository'
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: pull
-    paths:
-      - build
-      - .gradle
-  only:
-    - tags
+#deploy_macos:
+#  when: never
+#  extends:
+#    - .macos_buildcloud_runners
+#  stage: deploy
+#  script:
+#    - export GRADLE_USER_HOME=`pwd`/.gradle
+#    - brew install openjdk@17
+#    - chmod +x ./gradlew
+#    - './gradlew publishAllPublicationsToGitLabRepository'
+#  cache:
+#    key: "$CI_COMMIT_REF_NAME"
+#    policy: pull
+#    paths:
+#      - build
+#      - .gradle
+#  only:
+#    - tags
