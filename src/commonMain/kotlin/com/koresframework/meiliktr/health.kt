@@ -14,6 +14,9 @@ import com.koresframework.meiliktr.response.HealthResponse
 import io.ktor.client.request.*
 
 class Health(val meiliClient: MeiliClient) {
+    /**
+     * Gets the health of MeiliSearch Server.
+     */
     suspend fun health(): HealthResponse {
         return this.meiliClient.httpClient.get {
             url {

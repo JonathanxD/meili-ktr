@@ -1,4 +1,4 @@
-# Indexes
+# Documents
 
 ## Get document
 
@@ -7,7 +7,7 @@
 data class Doc(val docId: String, val text: String)
 
 val client = MeiliClient(MeiliClientConfig(host = "localhost", port = 7700, apiKey = null))
-val doc: Doc = client.documents.document(indexUid = "docs", documentId = "0")
+val doc: Doc = client.documents.getDocument(indexUid = "docs", documentId = "0")
 ```
 
 ## Get documents
@@ -16,7 +16,7 @@ val doc: Doc = client.documents.document(indexUid = "docs", documentId = "0")
 data class Doc(val docId: String, val text: String)
 
 val client = MeiliClient(MeiliClientConfig(host = "localhost", port = 7700, apiKey = null))
-val doc: List<Doc> = client.documents.documents(indexUid = "docs", /* optional */ offset = 0, /* optional */ limit = 20, /* optional */ attributesToRetrieve = "*")
+val doc: List<Doc> = client.documents.getDocuments(indexUid = "docs", /* optional */ offset = 0, /* optional */ limit = 20, /* optional */ attributesToRetrieve = "*")
 ```
 
 ## Add documents

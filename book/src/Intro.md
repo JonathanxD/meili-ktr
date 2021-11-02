@@ -18,9 +18,9 @@ It exposes the `HttpClient` used to make requests to MeiliSearch and provides lo
 
 ### Which Kotlin/Native targets are official supported?
 
-Currently, meili-ktr is compiled using GitLab CI/CD Linux machine, thus, only Linux is officially supported.
+Currently, meili-ktr is compiled using GitLab CI/CD Linux & Windows machines, thus, only those platforms are supported.
 
-We are currently working on building meili-ktr using both Windows and macOS host machines, but you can still clone meili-ktr and compile it on any machine that does have Kotlin/Native, Ktor Client and Kotlinx Serialization support.
+We are currently working on building meili-ktr using macOS host machine, but you can still clone meili-ktr and compile it on any machine that does have Kotlin/Native, Ktor Client and Kotlinx Serialization support.
 
 ### Does meili-ktr has Unit Tests?
 

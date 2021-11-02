@@ -3,3 +3,4 @@
 - [Client](./Client.md)
 - [Indexes](./Indexes.md)
 - [Documents](./Documents.md)
+- [Search](./Search.md)

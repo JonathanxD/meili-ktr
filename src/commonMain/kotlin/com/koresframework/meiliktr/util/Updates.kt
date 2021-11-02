@@ -14,9 +14,9 @@ import com.koresframework.meiliktr.Updates
 import kotlinx.coroutines.delay
 
 suspend inline fun Updates.delayUntilProcessed(indexUid: String, updateId: Int, delayMillis: Long = 250) {
-    var status = this.updateStatus(indexUid, updateId)
+    var status = this.getUpdateStatus(indexUid, updateId)
     while (status.status != "processed") {
         delay(delayMillis)
-        status = this.updateStatus(indexUid, updateId)
+        status = this.getUpdateStatus(indexUid, updateId)
     }
 }

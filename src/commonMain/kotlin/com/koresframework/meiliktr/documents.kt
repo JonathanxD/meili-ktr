@@ -17,7 +17,14 @@ import io.ktor.http.*
 import io.ktor.util.reflect.*
 
 class Documents(val meiliClient: MeiliClient) {
-    suspend fun document(info: TypeInfo, indexUid: String, documentId: String): Any {
+    /**
+     * Get a document by its [documentId] in the specified [index][indexUid].
+     *
+     * **Prefer the reified variant.**
+     *
+     * @param info The type information of the document type.
+     */
+    suspend fun getDocument(info: TypeInfo, indexUid: String, documentId: String): Any {
         val response = this.meiliClient.httpClient.get<HttpResponse> {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/documents/${documentId.encodeURLPath()}"
@@ -26,7 +33,10 @@ class Documents(val meiliClient: MeiliClient) {
         return response.call.receive(info)
     }
 
-    suspend inline fun <reified T> document(indexUid: String, documentId: String): T {
+    /**
+     * Get a document by its [documentId] in the specified [index][indexUid].
+     */
+    suspend inline fun <reified T> getDocument(indexUid: String, documentId: String): T {
         return this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/documents/${documentId.encodeURLPath()}"
@@ -34,11 +44,18 @@ class Documents(val meiliClient: MeiliClient) {
         }
     }
 
-    suspend fun documents(info: TypeInfo,
-                          indexUid: String,
-                          offset: Int = 0,
-                          limit: Int = 20,
-                          attributesToRetrieve: String = "*"): Any {
+    /**
+     * Gets all documents of specified [index][indexUid].
+     *
+     * **Prefer the reified variant.**
+     *
+     * @param info Type information of the List of document type (must be a List, like `typeInfo<List<Doc>>`).
+     */
+    suspend fun getDocuments(info: TypeInfo,
+                             indexUid: String,
+                             offset: Int = 0,
+                             limit: Int = 20,
+                             attributesToRetrieve: String = "*"): Any {
         val response = this.meiliClient.httpClient.get<HttpResponse> {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/documents"
@@ -50,10 +67,13 @@ class Documents(val meiliClient: MeiliClient) {
         return response.call.receive(info)
     }
 
-    suspend inline fun <reified T> documents(indexUid: String,
-                                             offset: Int = 0,
-                                             limit: Int = 20,
-                                             attributesToRetrieve: String = "*"): List<T> {
+    /**
+     * Gets all documents of specified [index][indexUid].
+     */
+    suspend inline fun <reified T> getDocuments(indexUid: String,
+                                                offset: Int = 0,
+                                                limit: Int = 20,
+                                                attributesToRetrieve: String = "*"): List<T> {
         return this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/documents"
@@ -64,6 +84,11 @@ class Documents(val meiliClient: MeiliClient) {
         }
     }
 
+    /**
+     * Adds all documents of the specified [documents] list to the [index][indexUid].
+     *
+     * @param primaryKey Primary key of documents.
+     */
     suspend fun addDocuments(indexUid: String,
                              documents: List<Any>,
                              primaryKey: String? = null): UpdateResponse {
@@ -78,6 +103,11 @@ class Documents(val meiliClient: MeiliClient) {
         }
     }
 
+    /**
+     * Updates all documents of the specified [documents] list in the [index][indexUid].
+     *
+     * @param primaryKey Primary key of documents.
+     */
     suspend fun updateDocuments(indexUid: String,
                                 documents: List<Any>,
                                 primaryKey: String? = null): UpdateResponse {
@@ -92,6 +122,9 @@ class Documents(val meiliClient: MeiliClient) {
         }
     }
 
+    /**
+     * Deletes all documents of the [index][indexUid].
+     */
     suspend fun deleteAllDocuments(indexUid: String): UpdateResponse {
         return this.meiliClient.httpClient.delete {
             url {
@@ -100,6 +133,9 @@ class Documents(val meiliClient: MeiliClient) {
         }
     }
 
+    /**
+     * Deletes a specific [document][documentId] of the [index][indexUid]
+     */
     suspend fun deleteDocument(indexUid: String, documentId: String): UpdateResponse {
         return this.meiliClient.httpClient.delete {
             url {
@@ -108,6 +144,9 @@ class Documents(val meiliClient: MeiliClient) {
         }
     }
 
+    /**
+     * Deletes all documents with id matching provided [documentIds] list of the [index][indexUid].
+     */
     suspend fun deleteDocuments(indexUid: String, documentIds: List<Any>): UpdateResponse {
         return this.meiliClient.httpClient.delete {
             url {

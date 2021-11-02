@@ -17,7 +17,7 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 
 class Settings(val meiliClient: MeiliClient) {
-    suspend fun settings(indexUid: String): Settings {
+    suspend fun getSettings(indexUid: String): Settings {
         return this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings"
@@ -43,7 +43,7 @@ class Settings(val meiliClient: MeiliClient) {
     }
 
     // -- Specific -- [displayed-attributes]
-    suspend fun displayedAttributes(indexUid: String): List<String> {
+    suspend fun getDisplayedAttributes(indexUid: String): List<String> {
         return this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/displayed-attributes"
@@ -69,7 +69,7 @@ class Settings(val meiliClient: MeiliClient) {
     }
 
     // -- Specific -- [distinct-attribute]
-    suspend fun distinctAttribute(indexUid: String): String {
+    suspend fun getDistinctAttribute(indexUid: String): String {
         return this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/distinct-attribute"
@@ -95,7 +95,7 @@ class Settings(val meiliClient: MeiliClient) {
     }
 
     // -- Specific -- [filterable-attributes]
-    suspend fun filterableAttributes(indexUid: String): List<String> {
+    suspend fun getFilterableAttributes(indexUid: String): List<String> {
         return this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/filterable-attributes"
@@ -121,7 +121,7 @@ class Settings(val meiliClient: MeiliClient) {
     }
 
     // -- Specific -- [ranking-rules]
-    suspend fun rankingRules(indexUid: String): List<String> {
+    suspend fun getRankingRules(indexUid: String): List<String> {
         return this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/ranking-rules"
@@ -147,7 +147,7 @@ class Settings(val meiliClient: MeiliClient) {
     }
 
     // -- Specific -- [searchable-attributes]
-    suspend fun searchableAttributes(indexUid: String): List<String> {
+    suspend fun getSearchableAttributes(indexUid: String): List<String> {
         return this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/searchable-attributes"
@@ -173,7 +173,7 @@ class Settings(val meiliClient: MeiliClient) {
     }
 
     // -- Specific -- [sortable-attributes]
-    suspend fun sortableAttributes(indexUid: String): List<String> {
+    suspend fun getSortableAttributes(indexUid: String): List<String> {
         return this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/sortable-attributes"
@@ -199,7 +199,7 @@ class Settings(val meiliClient: MeiliClient) {
     }
 
     // -- Specific -- [stop-words]
-    suspend fun stopWords(indexUid: String): List<String> {
+    suspend fun getStopWords(indexUid: String): List<String> {
         return this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/stop-words"
@@ -225,7 +225,7 @@ class Settings(val meiliClient: MeiliClient) {
     }
 
     // -- Specific -- [synonyms]
-    suspend fun synonyms(indexUid: String): Synonyms {
+    suspend fun getSynonyms(indexUid: String): Synonyms {
         return this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/synonyms"

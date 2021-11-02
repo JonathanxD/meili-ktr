@@ -15,7 +15,10 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 
 class Updates(val meiliClient: MeiliClient) {
-    suspend fun updateStatus(indexUid: String, updateId: Int): UpdateStatusResponse {
+    /**
+     * Gets the update status of a [update][updateId] in a [index][indexUid].
+     */
+    suspend fun getUpdateStatus(indexUid: String, updateId: Int): UpdateStatusResponse {
         return this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/updates/$updateId"
@@ -23,7 +26,10 @@ class Updates(val meiliClient: MeiliClient) {
         }
     }
 
-    suspend fun allUpdatesStatus(indexUid: String): List<UpdateStatusResponse> {
+    /**
+     * Gets status of all running updates in the [index][indexUid].
+     */
+    suspend fun getAllUpdatesStatus(indexUid: String): List<UpdateStatusResponse> {
         return this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/updates"

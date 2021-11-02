@@ -29,7 +29,7 @@ class GenericTest {
     @Ignore
     fun `test create delete insert and delete doc`() = runBlocking {
         val client = MeiliClient(MeiliClientConfig("localhost", 7700))
-        client.indexes.indexes().filter {
+        client.indexes.getIndexes().filter {
             it.uid == "docs"
         }.forEach {
             client.indexes.deleteIndex(it.uid)
@@ -40,7 +40,7 @@ class GenericTest {
         val insert2 = client.documents.addDocuments("docs", listOf(Doc("101", " my dear world")))
         client.updates.delayUntilProcessed("docs", insert.updateId)
         client.updates.delayUntilProcessed("docs", insert2.updateId)
-        val docs = client.documents.documents<Doc>("docs")
+        val docs = client.documents.getDocuments<Doc>("docs")
         assertEquals(2, docs.size)
 
         val s = client.search.search<Doc>("docs", SearchRequest(q = "hello"))

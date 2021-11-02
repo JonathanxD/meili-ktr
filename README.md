@@ -4,6 +4,7 @@
 [![Discord](https://img.shields.io/discord/291407467286364164.svg)](https://discord.gg/3cQWmtj)
 [![Pipeline](https://img.shields.io/gitlab/pipeline-status/Kores/meili-ktr)](https://gitlab.com/Kores/meili-ktr/-/pipelines)
 [![Packages](https://img.shields.io/gitlab/v/tag/Kores/meili-ktr)](https://gitlab.com/Kores/meili-ktr/-/packages)
+[![Documentation](https://img.shields.io/badge/docs-ready-blue)](https://idocs.xyz/ondemand?url=https%3A%2F%2Fgitlab.com%2FKores%2Fmeili-ktr%2F&revision=0.1.6)
 
 
 Multiplatform Kotlin client for MeiliSearch API.
@@ -21,60 +22,4 @@ meili-ktr is designed for Kotlin language and is not Java friendly, for a Java l
 
 ## Examples
 
-### Create, Delete and Get indices
-
-```kotlin
-val client = MeiliClient(MeiliClientConfiguration("localhost", 7700))
-val createIndex = client.indexes.createIndex("articles")
-val indexes = client.indexes.indexes()
-val deleteIndex = client.indexes.deleteIndex("articles")
-```
-
-### Add document
-
-```kotlin
-@Serializable
-data class Doc(val docId: String, val text: String)
-
-val client = MeiliClient(MeiliClientConfiguration("localhost", 7700))
-val createIndex = client.indexes.createIndex("docs", "docId")
-val addDoc = client.documents.addDocuments("docs", listOf(Doc("1", "Oh my MeiliSearch")))
-```
-
-### Get documents
-
-```kotlin
-@Serializable
-data class Doc(val docId: String, val text: String)
-
-val client = MeiliClient(MeiliClientConfiguration("localhost", 7700))
-val docs = client.documents.documents<Doc>("docs")
-```
-
-### Delete document
-
-```kotlin
-val client = MeiliClient(MeiliClientConfiguration("localhost", 7700))
-client.documents.deleteDocument("docs", "1")
-```
-
-### Search documents
-
-```kotlin
-@Serializable
-data class Doc(val docId: String, val text: String)
-
-val client = MeiliClient(MeiliClientConfiguration("localhost", 7700))
-val s = client.search.search<Doc>("docs", SearchRequest(q = "MeiliSearch"))
-```
-
-### Wait operation finish
-
-```kotlin
-@Serializable
-data class Doc(val docId: String, val text: String)
-
-val client = MeiliClient(MeiliClientConfiguration("localhost", 7700))
-val addDoc = client.documents.addDocuments("docs", listOf(Doc("1", "Oh my MeiliSearch")))
-client.updates.delayUntilProcessed("docs", addDoc.updateId)
-```
+Read the documentation [here](https://idocs.xyz/ondemand?url=https%3A%2F%2Fgitlab.com%2FKores%2Fmeili-ktr%2F&revision=0.1.6).

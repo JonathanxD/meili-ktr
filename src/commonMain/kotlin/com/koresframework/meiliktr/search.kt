@@ -18,6 +18,14 @@ import io.ktor.http.*
 import io.ktor.util.reflect.*
 
 class Search(val meiliClient: MeiliClient) {
+    /**
+     * Searches documents in the specified [index][indexUid].
+     *
+     * **Prefer the reified variant**.
+     *
+     * @param info Type information of [SearchResponse]. (Must be type info of [SearchResponse],
+     * like `typeInfo<SearchResponse<Doc>>()`).
+     */
     suspend fun <T> search(info: TypeInfo, indexUid: String, req: SearchRequest): SearchResponse<T> {
         val response = this.meiliClient.httpClient.post<HttpResponse> {
             url {
@@ -28,6 +36,9 @@ class Search(val meiliClient: MeiliClient) {
         return response.call.receive(info) as SearchResponse<T>
     }
 
+    /**
+     * Searches documents in the specified [index][indexUid].
+     */
     suspend inline fun <reified T> search(indexUid: String, req: SearchRequest): SearchResponse<T> {
         return this.meiliClient.httpClient.post {
             url {

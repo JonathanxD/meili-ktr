@@ -4,7 +4,7 @@
 
 ```kotlin
 val client = MeiliClient(MeiliClientConfig(host = "localhost", port = 7700, apiKey = null))
-val indexes = client.indexes.indexes()
+val indexes = client.indexes.getIndexes()
 ```
 
 ## Create index
@@ -28,5 +28,5 @@ val updateIndex = client.indexes.updateIndex("docs", primaryKey = "docId")
 ## Get Index
 ```kotlin
 val client = MeiliClient(MeiliClientConfig(host = "localhost", port = 7700, apiKey = null))
-val index = client.indexes.index("docs")
+val index = client.indexes.getIndex("docs")
 ```

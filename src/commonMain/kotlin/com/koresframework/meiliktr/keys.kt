@@ -14,7 +14,10 @@ import com.koresframework.meiliktr.response.KeysResponse
 import io.ktor.client.request.*
 
 class Keys(val meiliClient: MeiliClient) {
-    suspend fun keys(): KeysResponse {
+    /**
+     * Gets private and public keys.
+     */
+    suspend fun getKeys(): KeysResponse {
         return this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/keys"

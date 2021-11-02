@@ -16,6 +16,11 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 
 class Dumps(val meiliClient: MeiliClient) {
+    /**
+     * Creates a `.dump` file in the MeiliSearch Server directory.
+     *
+     * To retrieve the status of the dump operation, use [getDumpStatus].
+     */
     suspend fun dumps(): DumpsResponse {
         return this.meiliClient.httpClient.post {
             url {
@@ -24,7 +29,10 @@ class Dumps(val meiliClient: MeiliClient) {
         }
     }
 
-    suspend fun status(dumpUid: String): DumpsStatusResponse {
+    /**
+     * Retrieves the status of a [dump][dumpUid] operation.
+     */
+    suspend fun getDumpStatus(dumpUid: String): DumpsStatusResponse {
         return this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/dumps/${dumpUid.encodeURLPath()}/status"

@@ -21,6 +21,11 @@ import io.ktor.http.*
 class Indexes(val meiliClient: MeiliClient) {
     val settings = Settings(this.meiliClient)
 
+    /**
+     * Creates an index with provided [uid].
+     *
+     * @param primaryKey Primary Key of documents
+     */
     suspend fun createIndex(uid: String, primaryKey: String? = null): IndexResponse {
         return this.meiliClient.httpClient.post {
             url("/indexes")
@@ -28,6 +33,11 @@ class Indexes(val meiliClient: MeiliClient) {
         }
     }
 
+    /**
+     * Updates the index with provided [uid].
+     *
+     * @param primaryKey Primary Key of documents
+     */
     suspend fun updateIndex(uid: String, primaryKey: String? = null): IndexResponse {
         return this.meiliClient.httpClient.put {
             url {
@@ -37,6 +47,9 @@ class Indexes(val meiliClient: MeiliClient) {
         }
     }
 
+    /**
+     * Deletes the index with provided [uid].
+     */
     suspend fun deleteIndex(uid: String): DeleteResponse {
         val delete = this.meiliClient.httpClient.delete<HttpResponse> {
             url {
@@ -47,7 +60,10 @@ class Indexes(val meiliClient: MeiliClient) {
         return DeleteResponse(uid, delete.status == HttpStatusCode.NoContent)
     }
 
-    suspend fun indexes(): List<IndexResponse> {
+    /**
+     * Gets all indexes.
+     */
+    suspend fun getIndexes(): List<IndexResponse> {
         return this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/indexes"
@@ -55,7 +71,10 @@ class Indexes(val meiliClient: MeiliClient) {
         }
     }
 
-    suspend fun index(uid: String): IndexResponse {
+    /**
+     * Gets the index with specific [uid].
+     */
+    suspend fun getIndex(uid: String): IndexResponse {
         return this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/indexes/${uid.encodeURLPath()}"
