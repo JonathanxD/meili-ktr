@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "com.koresframework"
-version = "0.1.9"
+version = "0.1.10"
 
 repositories {
     mavenCentral()
@@ -35,7 +35,11 @@ kotlin {
                 cssSupport.enabled = true
             }
         }
+        nodejs {
+
+        }
     }
+
     val macos = macosX64("macos64")
     val linux = linuxX64("linux64")
     val windows = mingwX64("mingw64")

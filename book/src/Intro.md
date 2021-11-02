@@ -8,7 +8,7 @@ A [MeiliSearch](https://meilisearch.com) API for Kotlin, which takes advantage o
 
 meili-ktr is built using Kotlin MMP (Multiplatform Programming) and runs on JVM, Javascript (browser or NodeJS), or natively on any Kotlin/Native target that also have a Ktor Client Engine implementation and Kotlinx Serialization support.
 
-Also, this library does not use a specific Ktor Client Engine, the user must choose the one that is supported in the targeting platform and suits their needs.
+Also, this library does not use a specific Ktor Client Engine, the user must choose the one that is supported in the targeting platform and suits its needs.
 
 ## Tiny and Low-level
 
@@ -18,9 +18,15 @@ It exposes the `HttpClient` used to make requests to MeiliSearch and provides lo
 
 ### Which Kotlin/Native targets are official supported?
 
-Currently, meili-ktr is compiled using GitLab CI/CD Linux & Windows machines, thus, only those platforms are supported.
+These are the platforms meili-ktr is officially built:
 
-We are currently working on building meili-ktr using macOS host machine, but you can still clone meili-ktr and compile it on any machine that does have Kotlin/Native, Ktor Client and Kotlinx Serialization support.
+- Windows-x86_64 (Shared Runner)
+- Linux-x86_64 (Shared Runner)
+- macOS-arm64 (Dedicated Runner)
+
+And binaries are distributed through [GitLab Packages Maven Repository](https://gitlab.com/Kores/meili-ktr/-/packages).
+However, this library does not use any platform-specific code, so it can be built on any target that supports Ktor Client Engine 
+and Kotlinx Serialization. We just are not able to provide binaries for all targets supported by these libraries.
 
 ### Does meili-ktr has Unit Tests?
 
