@@ -24,6 +24,11 @@ variables:
     - windows
     - windows-1809
 
+.macos_buildcloud_runners:
+  tags:
+    - shared-macos-amd64
+  image: macos-11-xcode-12
+
 build:
   stage: build
   image: azul/zulu-openjdk:17.0.1
@@ -67,6 +72,24 @@ deploy_windows:
     - choco install -y openjdk --version 17.0.1 --params "/q /norestart"
     - refreshenv
     - '.\gradlew.bat publishAllPublicationsToGitLabRepository'
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+  only:
+    - tags
+
+deploy_macos:
+  extends:
+    - .macos_buildcloud_runners
+  stage: deploy
+  script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - brew install openjdk@17
+    - chmod +x ./gradlew
+    - './gradlew publishAllPublicationsToGitLabRepository'
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
