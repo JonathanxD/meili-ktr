@@ -82,6 +82,7 @@ deploy_windows:
     - tags
 
 deploy_macos:
+  when: never
   extends:
     - .macos_buildcloud_runners
   stage: deploy
