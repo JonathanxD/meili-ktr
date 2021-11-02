@@ -4,7 +4,7 @@
 [![Discord](https://img.shields.io/discord/291407467286364164.svg)](https://discord.gg/3cQWmtj)
 [![Pipeline](https://img.shields.io/gitlab/pipeline-status/Kores/meili-ktr)](https://gitlab.com/Kores/meili-ktr/-/pipelines)
 [![Packages](https://img.shields.io/gitlab/v/tag/Kores/meili-ktr)](https://gitlab.com/Kores/meili-ktr/-/packages)
-[![Documentation](https://img.shields.io/badge/docs-ready-blue)](https://idocs.xyz/ondemand?url=https%3A%2F%2Fgitlab.com%2FKores%2Fmeili-ktr%2F&revision=0.1.10)
+[![Documentation](https://img.shields.io/badge/docs-ready-blue)](https://idocs.xyz/ondemand?url=https%3A%2F%2Fgitlab.com%2FKores%2Fmeili-ktr%2F&revision=0.1.11)
 
 
 Multiplatform Kotlin client for MeiliSearch API.
@@ -22,4 +22,4 @@ meili-ktr is designed for Kotlin language and is not Java friendly, for a Java l
 
 ## Examples
 
-Read the documentation [here](https://idocs.xyz/ondemand?url=https%3A%2F%2Fgitlab.com%2FKores%2Fmeili-ktr%2F&revision=0.1.10).
+Read the documentation [here](https://idocs.xyz/ondemand?url=https%3A%2F%2Fgitlab.com%2FKores%2Fmeili-ktr%2F&revision=0.1.11).
