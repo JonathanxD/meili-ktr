@@ -12,6 +12,7 @@ package com.koresframework.meiliktr
 
 import com.koresframework.meiliktr.request.SearchRequest
 import com.koresframework.meiliktr.response.SearchResponse
+import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -27,13 +28,13 @@ class Search(val meiliClient: MeiliClient) {
      * like `typeInfo<SearchResponse<Doc>>()`).
      */
     suspend fun <T> search(info: TypeInfo, indexUid: String, req: SearchRequest): SearchResponse<T> {
-        val response = this.meiliClient.httpClient.post<HttpResponse> {
+        val response = this.meiliClient.httpClient.post {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/search"
             }
-            body = req
+            setBody(req)
         }
-        return response.call.receive(info) as SearchResponse<T>
+        return response.call.body(info) as SearchResponse<T>
     }
 
     /**
@@ -44,7 +45,7 @@ class Search(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/search"
             }
-            body = req
-        }
+            setBody(req)
+        }.body()
     }
 }

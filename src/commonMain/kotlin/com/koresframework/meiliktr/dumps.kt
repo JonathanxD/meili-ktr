@@ -12,6 +12,7 @@ package com.koresframework.meiliktr
 
 import com.koresframework.meiliktr.response.DumpsResponse
 import com.koresframework.meiliktr.response.DumpsStatusResponse
+import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
@@ -26,7 +27,7 @@ class Dumps(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/dumps"
             }
-        }
+        }.body()
     }
 
     /**
@@ -37,6 +38,6 @@ class Dumps(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/dumps/${dumpUid.encodeURLPath()}/status"
             }
-        }
+        }.body()
     }
 }

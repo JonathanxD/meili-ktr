@@ -13,6 +13,7 @@ package com.koresframework.meiliktr
 import com.koresframework.meiliktr.common.Settings
 import com.koresframework.meiliktr.common.Synonyms
 import com.koresframework.meiliktr.response.UpdateResponse
+import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
@@ -22,7 +23,7 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings"
             }
-        }
+        }.body()
     }
 
     suspend fun updateSettings(indexUid: String, settings: Settings): UpdateResponse {
@@ -30,8 +31,8 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings"
             }
-            body = settings
-        }
+            setBody(settings)
+        }.body()
     }
 
     suspend fun resetSettings(indexUid: String): UpdateResponse {
@@ -39,7 +40,7 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings"
             }
-        }
+        }.body()
     }
 
     // -- Specific -- [displayed-attributes]
@@ -48,7 +49,7 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/displayed-attributes"
             }
-        }
+        }.body()
     }
 
     suspend fun updateDisplayedAttributes(indexUid: String, displayedAttributes: List<String>): UpdateResponse {
@@ -56,8 +57,8 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/displayed-attributes"
             }
-            body = displayedAttributes
-        }
+            setBody(displayedAttributes)
+        }.body()
     }
 
     suspend fun resetDisplayedAttributes(indexUid: String): UpdateResponse {
@@ -65,7 +66,7 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/displayed-attributes"
             }
-        }
+        }.body()
     }
 
     // -- Specific -- [distinct-attribute]
@@ -74,7 +75,7 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/distinct-attribute"
             }
-        }
+        }.body()
     }
 
     suspend fun updateDistinctAttribute(indexUid: String, distinctAttribute: String): UpdateResponse {
@@ -82,8 +83,8 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/distinct-attribute"
             }
-            body = distinctAttribute
-        }
+            setBody(distinctAttribute)
+        }.body()
     }
 
     suspend fun resetDistinctAttribute(indexUid: String): UpdateResponse {
@@ -91,7 +92,7 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/distinct-attribute"
             }
-        }
+        }.body()
     }
 
     // -- Specific -- [filterable-attributes]
@@ -100,7 +101,7 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/filterable-attributes"
             }
-        }
+        }.body()
     }
 
     suspend fun updateFilterableAttributes(indexUid: String, filterableAttributes: List<String>): UpdateResponse {
@@ -108,8 +109,8 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/filterable-attributes"
             }
-            body = filterableAttributes
-        }
+            setBody(filterableAttributes)
+        }.body()
     }
 
     suspend fun resetFilterableAttributes(indexUid: String): UpdateResponse {
@@ -117,7 +118,7 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/filterable-attributes"
             }
-        }
+        }.body()
     }
 
     // -- Specific -- [ranking-rules]
@@ -126,7 +127,7 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/ranking-rules"
             }
-        }
+        }.body()
     }
 
     suspend fun updateRankingRules(indexUid: String, rankingRules: List<String>): UpdateResponse {
@@ -134,8 +135,8 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/ranking-rules"
             }
-            body = rankingRules
-        }
+            setBody(rankingRules)
+        }.body()
     }
 
     suspend fun resetRankingRules(indexUid: String): UpdateResponse {
@@ -143,7 +144,7 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/ranking-rules"
             }
-        }
+        }.body()
     }
 
     // -- Specific -- [searchable-attributes]
@@ -152,7 +153,7 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/searchable-attributes"
             }
-        }
+        }.body()
     }
 
     suspend fun updateSearchableAttributes(indexUid: String, searchableAttributes: List<String>): UpdateResponse {
@@ -160,8 +161,8 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/searchable-attributes"
             }
-            body = searchableAttributes
-        }
+            setBody(searchableAttributes)
+        }.body()
     }
 
     suspend fun resetSearchableAttributes(indexUid: String): UpdateResponse {
@@ -169,7 +170,7 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/searchable-attributes"
             }
-        }
+        }.body()
     }
 
     // -- Specific -- [sortable-attributes]
@@ -178,7 +179,7 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/sortable-attributes"
             }
-        }
+        }.body()
     }
 
     suspend fun updateSortableAttributes(indexUid: String, sortableAttributes: List<String>): UpdateResponse {
@@ -186,8 +187,8 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/sortable-attributes"
             }
-            body = sortableAttributes
-        }
+            setBody(sortableAttributes)
+        }.body()
     }
 
     suspend fun resetSortableAttributes(indexUid: String): UpdateResponse {
@@ -195,7 +196,7 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/sortable-attributes"
             }
-        }
+        }.body()
     }
 
     // -- Specific -- [stop-words]
@@ -204,7 +205,7 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/stop-words"
             }
-        }
+        }.body()
     }
 
     suspend fun updateStopWords(indexUid: String, stopWords: List<String>): UpdateResponse {
@@ -212,8 +213,8 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/stop-words"
             }
-            body = stopWords
-        }
+            setBody(stopWords)
+        }.body()
     }
 
     suspend fun resetStopWords(indexUid: String): UpdateResponse {
@@ -221,7 +222,7 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/stop-words"
             }
-        }
+        }.body()
     }
 
     // -- Specific -- [synonyms]
@@ -230,7 +231,7 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/synonyms"
             }
-        }
+        }.body()
     }
 
     suspend fun updateSynonyms(indexUid: String, synonyms: Synonyms): UpdateResponse {
@@ -238,8 +239,8 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/synonyms"
             }
-            body = synonyms
-        }
+            setBody(synonyms)
+        }.body()
     }
 
     suspend fun resetSynonyms(indexUid: String): UpdateResponse {
@@ -247,6 +248,6 @@ class Settings(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/settings/synonyms"
             }
-        }
+        }.body()
     }
 }

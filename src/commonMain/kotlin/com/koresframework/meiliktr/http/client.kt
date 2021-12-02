@@ -12,10 +12,10 @@ package com.koresframework.meiliktr.http
 
 import com.koresframework.meiliktr.MeiliClientConfig
 import io.ktor.client.*
-import io.ktor.client.features.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
+import io.ktor.http.*
+import io.ktor.serialization.kotlinx.*
 import kotlinx.serialization.json.Json
 
 fun client(config: MeiliClientConfig) = HttpClient {
@@ -23,10 +23,12 @@ fun client(config: MeiliClientConfig) = HttpClient {
         agent = "MeiliSearch Kotlin Ktor Client"
     }
 
-    install(JsonFeature) {
-        serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
-            ignoreUnknownKeys = true
-        })
+    install(ContentNegotiation) {
+        register(ContentType.Application.Json, KotlinxSerializationConverter(
+            Json {
+                ignoreUnknownKeys = true
+            }
+        ))
     }
 
     defaultRequest {

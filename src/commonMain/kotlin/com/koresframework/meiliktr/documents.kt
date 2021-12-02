@@ -11,10 +11,12 @@
 package com.koresframework.meiliktr
 
 import com.koresframework.meiliktr.response.UpdateResponse
+import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.util.reflect.*
+import io.ktor.client.request.get
 
 class Documents(val meiliClient: MeiliClient) {
     /**
@@ -25,12 +27,12 @@ class Documents(val meiliClient: MeiliClient) {
      * @param info The type information of the document type.
      */
     suspend fun getDocument(info: TypeInfo, indexUid: String, documentId: String): Any {
-        val response = this.meiliClient.httpClient.get<HttpResponse> {
+        val response = this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/documents/${documentId.encodeURLPath()}"
             }
         }
-        return response.call.receive(info)
+        return response.call.body(info)
     }
 
     /**
@@ -41,7 +43,7 @@ class Documents(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/documents/${documentId.encodeURLPath()}"
             }
-        }
+        }.body()
     }
 
     /**
@@ -56,7 +58,7 @@ class Documents(val meiliClient: MeiliClient) {
                              offset: Int = 0,
                              limit: Int = 20,
                              attributesToRetrieve: String = "*"): Any {
-        val response = this.meiliClient.httpClient.get<HttpResponse> {
+        val response = this.meiliClient.httpClient.get {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/documents"
                 parameter("offset", offset)
@@ -64,7 +66,7 @@ class Documents(val meiliClient: MeiliClient) {
                 parameter("attributesToRetrieve", attributesToRetrieve)
             }
         }
-        return response.call.receive(info)
+        return response.call.body(info)
     }
 
     /**
@@ -81,7 +83,7 @@ class Documents(val meiliClient: MeiliClient) {
                 parameter("limit", limit)
                 parameter("attributesToRetrieve", attributesToRetrieve)
             }
-        }
+        }.body()
     }
 
     /**
@@ -99,8 +101,8 @@ class Documents(val meiliClient: MeiliClient) {
                     parameter("primaryKey", primaryKey)
                 }
             }
-            body = documents
-        }
+            setBody(documents)
+        }.body()
     }
 
     /**
@@ -118,8 +120,8 @@ class Documents(val meiliClient: MeiliClient) {
                     parameter("primaryKey", primaryKey)
                 }
             }
-            body = documents
-        }
+            setBody(documents)
+        }.body()
     }
 
     /**
@@ -130,7 +132,7 @@ class Documents(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/documents"
             }
-        }
+        }.body()
     }
 
     /**
@@ -141,7 +143,7 @@ class Documents(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/documents/${documentId.encodeURLPath()}"
             }
-        }
+        }.body()
     }
 
     /**
@@ -152,7 +154,7 @@ class Documents(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/documents/delete-batch"
             }
-            body = documentIds
-        }
+            setBody(documentIds)
+        }.body()
     }
 }

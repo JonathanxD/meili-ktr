@@ -11,7 +11,9 @@
 package com.koresframework.meiliktr
 
 import com.koresframework.meiliktr.response.KeysResponse
+import io.ktor.client.call.*
 import io.ktor.client.request.*
+import io.ktor.http.*
 
 class Keys(val meiliClient: MeiliClient) {
     /**
@@ -22,6 +24,6 @@ class Keys(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/keys"
             }
-        }
+        }.body()
     }
 }

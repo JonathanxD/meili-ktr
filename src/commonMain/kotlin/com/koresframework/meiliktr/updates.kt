@@ -11,6 +11,7 @@
 package com.koresframework.meiliktr
 
 import com.koresframework.meiliktr.response.UpdateStatusResponse
+import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
@@ -23,7 +24,7 @@ class Updates(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/updates/$updateId"
             }
-        }
+        }.body()
     }
 
     /**
@@ -34,6 +35,6 @@ class Updates(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${indexUid.encodeURLPath()}/updates"
             }
-        }
+        }.body()
     }
 }

@@ -11,7 +11,9 @@
 package com.koresframework.meiliktr
 
 import com.koresframework.meiliktr.response.HealthResponse
+import io.ktor.client.call.*
 import io.ktor.client.request.*
+import io.ktor.http.*
 
 class Health(val meiliClient: MeiliClient) {
     /**
@@ -22,6 +24,6 @@ class Health(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/health"
             }
-        }
+        }.body()
     }
 }

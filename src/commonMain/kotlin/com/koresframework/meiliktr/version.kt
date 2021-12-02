@@ -11,7 +11,9 @@
 package com.koresframework.meiliktr
 
 import com.koresframework.meiliktr.response.VersionResponse
+import io.ktor.client.call.*
 import io.ktor.client.request.*
+import io.ktor.http.*
 
 class Version(val meiliClient: MeiliClient) {
     suspend fun getVersion(): VersionResponse {
@@ -19,6 +21,6 @@ class Version(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/version"
             }
-        }
+        }.body()
     }
 }

@@ -14,6 +14,7 @@ import com.koresframework.meiliktr.request.IndexCreateRequest
 import com.koresframework.meiliktr.request.IndexUpdateRequest
 import com.koresframework.meiliktr.response.DeleteResponse
 import com.koresframework.meiliktr.response.IndexResponse
+import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -29,8 +30,8 @@ class Indexes(val meiliClient: MeiliClient) {
     suspend fun createIndex(uid: String, primaryKey: String? = null): IndexResponse {
         return this.meiliClient.httpClient.post {
             url("/indexes")
-            body = IndexCreateRequest(uid, primaryKey)
-        }
+            setBody(IndexCreateRequest(uid, primaryKey))
+        }.body()
     }
 
     /**
@@ -43,15 +44,15 @@ class Indexes(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes"
             }
-            body = IndexUpdateRequest(uid, primaryKey)
-        }
+            setBody(IndexUpdateRequest(uid, primaryKey))
+        }.body()
     }
 
     /**
      * Deletes the index with provided [uid].
      */
     suspend fun deleteIndex(uid: String): DeleteResponse {
-        val delete = this.meiliClient.httpClient.delete<HttpResponse> {
+        val delete = this.meiliClient.httpClient.delete {
             url {
                 encodedPath = "/indexes/${uid.encodeURLPath()}"
             }
@@ -68,7 +69,7 @@ class Indexes(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes"
             }
-        }
+        }.body()
     }
 
     /**
@@ -79,6 +80,6 @@ class Indexes(val meiliClient: MeiliClient) {
             url {
                 encodedPath = "/indexes/${uid.encodeURLPath()}"
             }
-        }
+        }.body()
     }
 }

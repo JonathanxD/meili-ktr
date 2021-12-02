@@ -3,8 +3,8 @@ val kotlin_version: String by project
 val kotlinx_json_serialization_version: String by project
 
 plugins {
-    kotlin("multiplatform") version "1.5.31"
-    kotlin("plugin.serialization") version "1.5.31"
+    kotlin("multiplatform") version "1.6.0"
+    kotlin("plugin.serialization") version "1.6.0"
     id("com.github.hierynomus.license") version "0.16.1"
     id("maven-publish")
 }
@@ -14,6 +14,10 @@ version = "0.1.11"
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
+        name = "ktor-eap"
+    }
 }
 
 val hostOs = System.getProperty("os.name")
@@ -52,6 +56,8 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinx_json_serialization_version")
                 implementation("io.ktor:ktor-client-serialization:$ktor_version")
+                implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
                 implementation("io.ktor:ktor-client-core:$ktor_version")
             }
         }
